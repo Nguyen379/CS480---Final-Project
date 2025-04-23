@@ -31,6 +31,9 @@ const Footer = () => {
     },
   }
 
+  // On hover, scale the GitHub logo and change the link color to black
+  
+
   return (
     <footer style={styles.footer}>
       <div style={styles.container}>

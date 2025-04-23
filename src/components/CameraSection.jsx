@@ -7,6 +7,7 @@ const CameraSection = ({ onDetectEmotion }) => {
   const videoRef = useRef(null)
   const [isCameraOpen, setIsCameraOpen] = useState(false)
 
+  // Open camera when component mounts
   const openCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true })
@@ -18,6 +19,10 @@ const CameraSection = ({ onDetectEmotion }) => {
       console.error("Error accessing camera:", err)
     }
   }
+
+  // Close camera when component unmounts
+  // This is a cleanup function that stops the camera stream
+  // and sets the video source to null
 
   const closeCamera = () => {
     const stream = videoRef.current?.srcObject
@@ -98,6 +103,7 @@ const CameraSection = ({ onDetectEmotion }) => {
     },
   }
 
+  
   return (
     <section style={styles.section}>
       <div style={styles.videoContainer}>
@@ -116,6 +122,8 @@ const CameraSection = ({ onDetectEmotion }) => {
         )}
       </div>
 
+
+      {/* Open camera button or detect emotion button based on camera state */} 
       <div style={styles.buttonRow}>
         {!isCameraOpen ? (
           <button onClick={openCamera} style={styles.openButton}>
