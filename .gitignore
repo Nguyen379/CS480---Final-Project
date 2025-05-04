@@ -7,10 +7,40 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node.js
 node_modules
 dist
 dist-ssr
 *.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+backend/__pycache__/
+backend/.venv/
+backend/venv/
+backend/env/
+
+# Model files (large files that should be downloaded at runtime)
+*.pth
+*.pt
+*.bin
+*.onnx
+*.h5
+*.hdf5
+*.pb
+*.ckpt
+*.weights
 
 # Editor directories and files
 .vscode/*
@@ -22,3 +52,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temporary files
+*~
+*.tmp
+*.bak
+*.swp
