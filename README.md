@@ -99,7 +99,10 @@ The app will be available at http://localhost:5173 (or the port specified by Vit
 └── vite.config.js        # Vite configuration
 ```
 
-## About the Model
+## About the Model and Dataset
+
+The dataset is taken from: https://www.kaggle.com/datasets/msambare/fer2013
+The project uses this model: https://huggingface.co/trpakov/vit-face-expression
 
 This project uses the "trpakov/vit-face-expression" model from Hugging Face, which is a Vision Transformer (ViT) fine-tuned on the FER2013 dataset. It can recognize seven emotions:
 
