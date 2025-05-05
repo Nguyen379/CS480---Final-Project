@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "./components/Header";
 import CameraSection from "./components/CameraSection";
 import ResultsPanel from "./components/ResultsPanel";
@@ -53,32 +53,36 @@ const mockDetectEmotion = async (imageBase64) => {
   };
 };
 
-// Set up initial detection function to mock
-let detectEmotion = mockDetectEmotion;
-
-// Try to import the real API function
-import("./services/api")
-  .then((api) => {
-    detectEmotion = api.detectEmotion;
-    console.log("Successfully imported API service");
-  })
-  .catch((err) => {
-    console.error("Error importing API service, using mock data:", err);
-    // Keep using the mock function
-  });
 
 function App() {
+  const [modelChoice, setModelChoice] = useState("Model 1: trpakov/vit-face-expression");
   const [detectionResult, setDetectionResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Set up initial detection function to mock
+  const detectEmotion = useRef(mockDetectEmotion);
+
+  // Try to import the real API function
+  useEffect(() => {
+    import("./services/api")
+    .then((api) => {
+      detectEmotion.current = api.detectEmotion;
+      console.log("Successfully imported API service");
+    })
+    .catch((err) => {
+      console.error("Error importing API service, using mock data:", err);
+      // Keep using the mock function
+    });
+  }, []);
+
 
   const handleDetectEmotion = async (imageBase64) => {
     try {
       setIsLoading(true);
       setError(null);
-
-      // Call the API to detect emotion
-      const result = await detectEmotion(imageBase64);
+  
+      const result = await detectEmotion.current(imageBase64, modelChoice); // Pass model
       setDetectionResult(result);
     } catch (err) {
       console.error("Error in emotion detection:", err);
@@ -88,6 +92,7 @@ function App() {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="app">
@@ -112,6 +117,20 @@ function App() {
               {error}
             </div>
           )}
+
+          <div style={{ marginBottom: "1rem", textAlign: "center" }}>
+            <label htmlFor="modelChoice" style={{ marginRight: "0.5rem" }}>
+              Choose Model:
+            </label>
+            <select
+              id="modelChoice"
+              value={modelChoice}
+              onChange={(e) => setModelChoice(e.target.value)}
+            >
+              <option value="Model 1: trpakov/vit-face-expression">Model 1: trpakov/vit-face-expression</option>
+              <option value="Model 2: orriaga-model">Model 2: orriaga-model</option>
+            </select>          
+          </div>
 
           <CameraSection onDetectEmotion={handleDetectEmotion} />
 
