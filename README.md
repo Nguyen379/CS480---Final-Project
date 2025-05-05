@@ -25,6 +25,16 @@ Feelosophy is a web application that uses advanced computer vision and machine l
 ## Installation and Setup
 
 ### Backend Setup
+If you're using Python 3.12, you may encounter compatibility issues with key packages like tensorflow or flask as they are no longer supported on Python 3.12. It's recommended to use Python 3.10 or 3.11.
+To check your Python version, run:
+```bash
+python --version
+```
+If needed, create a virtual environment with a specific version:
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate
+```
 
 1. Navigate to the backend directory:
 
